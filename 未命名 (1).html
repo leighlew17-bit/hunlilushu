@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>冯朝军 & 吴思婷 婚礼路书</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#7E9F75',     // 森系绿色
+            secondary: '#D9C9BA',   // 浅卡其色
+            accent: '#A67F65',      // 浅棕色
+            light: '#F5F5F0',       // 米白色
+            dark: '#4A4A48'         // 深灰色文字
+          },
+          fontFamily: {
+            sans: ['Noto Sans SC', 'sans-serif'],
+            serif: ['Noto Serif SC', 'serif'],
+            display: ['Playfair Display', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      }
+      .bg-blur {
+        backdrop-filter: blur(8px);
+      }
+      .scroll-smooth {
+        scroll-behavior: smooth;
+      }
+      .leaf {
+        position: relative;
+      }
+      .leaf::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background-color: #7E9F75;
+        top: 50%;
+        left: 0;
+        z-index: 0;
+      }
+      .leaf::after {
+        content: "❦";
+        position: relative;
+        z-index: 1;
+        padding: 0 1rem;
+        background-color: #F5F5F0;
+        color: #7E9F75;
+      }
+    }
+  </style>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-light text-dark font-sans scroll-smooth">
+  <!-- 导航栏 -->
+  <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-light/90 bg-blur shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="text-primary font-display text-xl md:text-2xl">朝军 & 思婷</a>
+      <div class="hidden md:flex space-x-6">
+        <a href="#info" class="hover:text-primary transition-colors">基本信息</a>
+        <a href="#location" class="hover:text-primary transition-colors">地理位置</a>
+        <a href="#schedule" class="hover:text-primary transition-colors">时间安排</a>
+        <a href="#process" class="hover:text-primary transition-colors">流程指引</a>
+        <a href="#seating" class="hover:text-primary transition-colors">座位安排</a>
+      </div>
+      <button id="menu-toggle" class="md:hidden text-dark hover:text-primary">
+        <i class="fa fa-bars text-xl"></i>
+      </button>
+    </div>
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+        <a href="#info" class="py-2 hover:text-primary transition-colors">基本信息</a>
+        <a href="#location" class="py-2 hover:text-primary transition-colors">地理位置</a>
+        <a href="#schedule" class="py-2 hover:text-primary transition-colors">时间安排</a>
+        <a href="#process" class="py-2 hover:text-primary transition-colors">流程指引</a>
+        <a href="#seating" class="py-2 hover:text-primary transition-colors">座位安排</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 英雄区域 -->
+  <header class="pt-16">
+    <div class="relative h-[80vh] overflow-hidden">
+      <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/8a653c18c1d0498989308fd44796fc2a.png~tplv-a9rns2rl98-24:720:720.png?rcl=20251109155302F2ADCB35F5DE31772A7B&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1763279583&x-signature=gDCw8QzsUTtBID5Yg%2FMOde2K%2F4c%3D" 
+           alt="婚礼剪影" 
+           class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-dark/40"></div>
+      <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
+        <h1 class="font-display text-4xl md:text-6xl mb-4 text-shadow opacity-0 animate-[fadeIn_1s_0.5s_forwards]">冯朝军 & 吴思婷</h1>
+        <p class="text-xl md:text-2xl mb-6 text-shadow opacity-0 animate-[fadeIn_1s_1s_forwards]">我们的婚礼邀请</p>
+        <p class="text-lg md:text-xl opacity-0 animate-[fadeIn_1s_1.5s_forwards]">2025.11.15 广州北纬23°8森林营地</p>
+        <a href="#info" class="mt-8 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all transform hover:scale-105 opacity-0 animate-[fadeIn_1s_2s_forwards]">
+          查看详情 <i class="fa fa-arrow-down ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 基本信息 -->
+  <section id="info" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-display text-center mb-12 relative leaf">基本信息</h2>
+      
+      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+        <div class="w-full md:w-1/2">
+          <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/9bce9de1837c486f834cf930df711e77.jpg~tplv-a9rns2rl98-24:720:720.png?rcl=20251109155302F2ADCB35F5DE31772A7B&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1763279583&x-signature=MZLV3kJHqGa1WCApwDqd2wUElgQ%3D" 
+               alt="新人照片" 
+               class="w-full h-auto rounded-lg shadow-lg transform transition-transform hover:scale-[1.02]">
+        </div>
+        
+        <div class="w-full md:w-1/2 space-y-6">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <i class="fa fa-calendar text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-medium text-lg">婚礼日期</h3>
+              <p>11.15 💒从化婚礼（路书）</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <i class="fa fa-user text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-medium text-lg">新人信息</h3>
+              <p>新郎🤵：冯朝军 & 新娘👰：吴思婷</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <i class="fa fa-map-marker text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-medium text-lg">婚礼场地</h3>
+              <p>🏨酒店名称：广州北纬23°8森林营地</p>
+              <p>🏨酒店地址：从化区城郊街道西和村草塘101号</p>
+            </div>
+          </div>
+          
+          <div class="mt-8 p-6 bg-secondary/30 rounded-lg border-l-4 border-primary">
+            <p class="italic text-center">期待你的到来😊 让我们共同创造属于我们的美好的回忆吧～❤️</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 地理位置 -->
+  <section id="location" class="py-16 bg-light">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-display text-center mb-12 relative leaf">地理位置</h2>
+      
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="flex flex-col lg:flex-row">
+          <div class="w-full lg:w-2/3 h-[400px] md:h-[500px]">
+            <div id="map" class="w-full h-full"></div>
+          </div>
+          
+          <div class="w-full lg:w-1/3 p-6 md:p-8 flex flex-col justify-center">
+            <h3 class="text-2xl font-display mb-4 text-primary">广州北纬23°8森林营地</h3>
+            <p class="mb-6">从化区城郊街道西和村草塘101号</p>
+            
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <i class="fa fa-car text-primary mt-1"></i>
+                <p>自驾：导航搜索"广州北纬23°8森林营地"即可到达</p>
+              </div>
+              
+              <div class="flex items-start gap-3">
+                <i class="fa fa-bus text-primary mt-1"></i>
+                <p>公共交通：建议乘坐地铁至从化客运站后打车前往</p>
+              </div>
+              
+              <div class="flex items-start gap-3">
+                <i class="fa fa-info-circle text-primary mt-1"></i>
+                <p>到达后请前往【游客中心】咨询婚礼场地具体位置</p>
+              </div>
+            </div>
+            
+            <a href="https://maps.baidu.com/search/广州北纬23°8森林营地" target="_blank" class="mt-8 inline-block bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-all transform hover:scale-105 text-center">
+              <i class="fa fa-map mr-2"></i> 在百度地图中查看
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间安排 -->
+  <section id="schedule" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-display text-center mb-12 relative leaf">婚礼时间安排</h2>
+      
+      <div class="max-w-3xl mx-auto">
+        <div class="relative">
+          <!-- 时间线 -->
+          <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/30 transform md:translate-x-[-0.25rem]"></div>
+          
+          <!-- 时间点1 -->
+          <div class="relative mb-12 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-4 md:mt-0">
+              <h3 class="text-xl font-semibold text-primary">迎宾&签到</h3>
+              <p class="text-dark/70">在户外仪式区入口处签到，领取定制手环</p>
+              <p class="mt-1 text-sm text-accent">提供蚊贴、暖宝宝贴，有需要可领取</p>
+            </div>
+            
+            <div class="z-10 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-medium order-1 md:order-2">1</div>
+            
+            <div class="md:w-1/2 md:pl-12 order-3 hidden md:block">
+              <p class="font-medium">15:30 - 16:20</p>
+            </div>
+            
+            <div class="md:hidden order-3 mt-2 text-sm text-accent">
+              <p class="font-medium">15:30 - 16:20</p>
+            </div>
+          </div>
+          
+          <!-- 时间点2 -->
+          <div class="relative mb-12 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-4 md:mt-0">
+              <h3 class="text-xl font-semibold text-primary">仪式&合影</h3>
+              <p class="text-dark/70">婚礼主要仪式，之后将拍摄大合照</p>
+              <p class="mt-1 text-sm text-accent">请盛装出席，建议穿浅色系衣服</p>
+            </div>
+            
+            <div class="z-10 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-medium order-1 md:order-2">2</div>
+            
+            <div class="md:w-1/2 md:pl-12 order-3 hidden md:block">
+              <p class="font-medium">16:30 - 18:30</p>
+            </div>
+            
+            <div class="md:hidden order-3 mt-2 text-sm text-accent">
+              <p class="font-medium">16:30 - 18:30</p>
+            </div>
+          </div>
+          
+          <!-- 时间点3 -->
+          <div class="relative flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-4 md:mt-0">
+              <h3 class="text-xl font-semibold text-primary">晚宴&After Party</h3>
+              <p class="text-dark/70">户外用餐及派对，有精彩节目敬请期待</p>
+              <p class="mt-1 text-sm text-accent">别忘记带走新人准备的明信片</p>
+            </div>
+            
+            <div class="z-10 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-medium order-1 md:order-2">3</div>
+            
+            <div class="md:w-1/2 md:pl-12 order-3 hidden md:block">
+              <p class="font-medium">18:50 - 21:30</p>
+            </div>
+            
+            <div class="md:hidden order-3 mt-2 text-sm text-accent">
+              <p class="font-medium">18:50 - 21:30</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 流程指引 -->
+  <section id="process" class="py-16 bg-secondary/20">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-display text-center mb-12 relative leaf">参加婚礼流程指引</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 步骤1 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+          <div class="bg-primary text-white p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">❤️ Part 1</h3>
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">1</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p>各自出发前往 广州从化目的地</p>
+            <p class="mt-2">到达后找到大门口的【游客中心】</p>
+            <p class="mt-2">咨询里面的前台或工作人员🧑‍💼</p>
+            <p class="mt-2">问：参加婚礼💒怎么去？</p>
+            <p class="mt-2">前台会准备电瓶车送你至【婚礼仪式区场地-小车迷草坪】</p>
+            <p class="mt-2">或者可根据门口指引牌步行前往</p>
+            <p class="mt-2">或可租用景区电🐔前往哈哈😁</p>
+            <p class="mt-2">你开心就好～</p>
+          </div>
+        </div>
+        
+        <!-- 步骤2 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+          <div class="bg-primary text-white p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">❤️ Part 2</h3>
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">2</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p>15:30到达【户外仪式区】后请先在入口处签到哦，工作人员将为你带上婚礼定制手环。</p>
+            <p class="mt-2">(签到台也为大家准备了蚊贴、暖宝宝贴，有需要可领取～)</p>
+          </div>
+        </div>
+        
+        <!-- 步骤3 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+          <div class="bg-primary text-white p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">❤️ Part 3</h3>
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">3</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p>15:30-16:20在户外仪式区，你可享受新人为大家准备的酒水，可欣赏新人美丽的婚纱照，也可坐着休息等待仪式开启🔛</p>
+          </div>
+        </div>
+        
+        <!-- 步骤4 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+          <div class="bg-primary text-white p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">❤️ Part 4</h3>
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">4</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p>主要仪式将会在16:30开始🔚</p>
+            <p class="mt-2">大概17:15结束需要麻烦大家一起留步拍摄🎬大合照，请盛装出席哈哈😁（建议穿浅色系衣服哦）</p>
+          </div>
+        </div>
+        
+        <!-- 步骤5 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+          <div class="bg-primary text-white p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">❤️ Part 5</h3>
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">5</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p>晚宴是在户外用餐【地点：湖边大草坪】</p>
+            <p class="mt-2">建议入座时间是【18:30】；找到自己的位置哦（餐桌上有写大家的名字哈）～座位上有新人为大家精心准备的伴手礼（饿了可以先吃喜糖哈哈）和明信片（大家记得要好好收藏带走明信片哈哈哈😄）</p>
+          </div>
+        </div>
+        
+        <!-- 步骤6 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden transform transition-all hover:shadow-lg hover:-translate-y-1">
+          <div class="bg-primary text-white p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold">❤️ Part 6</h3>
+              <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">6</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p>新人19:00隆重登场～请准备好大家的欢呼声掌声👏好好享受晚上的派对🎉吃好喝好玩好（有很多节目哈哈😁敬请期待～）；别忘记离场的时候带走新人用心准备的明信片！！！！</p>
+            <p class="mt-2">大概会在21:30-22:00结束美好的一日</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 座位安排 -->
+  <section id="seating" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-display text-center mb-12 relative leaf">座位安排</h2>
+      
+      <div class="bg-light rounded-xl shadow-lg p-6 md:p-8">
+        <div class="flex justify-center mb-8">
+          <div class="inline-block px-4 py-2 bg-secondary text-dark rounded-full text-sm">
+            <i class="fa fa-info-circle mr-2"></i> 晚宴地点：湖边大草坪
+          </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/8f07b7aa6fbe43a4af19702d54f16e6b.jpg~tplv-a9rns2rl98-24:720:720.png?rcl=20251109155302F2ADCB35F5DE31772A7B&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1763279583&x-signature=VmhfrXbtc43KPBjKzcl56Yi4Cjc%3D" 
+               alt="座位安排图" 
+               class="w-full max-w-4xl mx-auto rounded-lg shadow-md">
+        </div>
+        
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div class="p-3 bg-primary/10 rounded-lg">
+            <p class="font-medium">男方宾客</p>
+            <p class="text-sm text-dark/70">上方区域</p>
+          </div>
+          <div class="p-3 bg-primary/10 rounded-lg">
+            <p class="font-medium">女方宾客</p>
+            <p class="text-sm text-dark/70">下方区域</p>
+          </div>
+          <div class="p-3 bg-primary/10 rounded-lg">
+            <p class="font-medium">乐队舞台</p>
+            <p class="text-sm text-dark/70">左侧中央</p>
+          </div>
+          <div class="p-3 bg-primary/10 rounded-lg">
+            <p class="font-medium">湖边</p>
+            <p class="text-sm text-dark/70">左侧区域</p>
+          </div>
+        </div>
+        
+        <div class="mt-6 text-center text-sm text-dark/70">
+          <p>温馨提示：餐桌上有标注各位的名字，请找到对应的座位就坐</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 着装建议 -->
+  <section class="py-16 bg-light">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-display text-center mb-12 relative leaf">着装建议</h2>
+      
+      <div class="max-w-2xl mx-auto text-center mb-10">
+        <p class="text-lg">为了与我们的森系婚礼主题相协调，建议穿着以下色系的服装</p>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-6 md:gap-10">
+        <div class="text-center">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white border-4 border-gray-200 mx-auto shadow-sm"></div>
+          <p class="mt-3">白色</p>
+        </div>
+        <div class="text-center">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-secondary border-4 border-gray-200 mx-auto shadow-sm"></div>
+          <p class="mt-3">浅卡其色</p>
+        </div>
+        <div class="text-center">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-primary/30 border-4 border-gray-200 mx-auto shadow-sm"></div>
+          <p class="mt-3">浅绿色</p>
+        </div>
+        <div class="text-center">
+          <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-accent/30 border-4 border-gray-200 mx-auto shadow-sm"></div>
+          <p class="mt-3">浅棕色</p>
+        </div>
+      </div>
+      
+      <div class="mt-12 text-center">
+        <p class="italic">仪式后将拍摄大合照，请盛装出席，留下美好回忆</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 感谢语 -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto bg-primary/5 rounded-2xl overflow-hidden shadow-sm">
+        <div class="flex flex-col md:flex-row">
+          <div class="w-full md:w-1/2">
+            <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/9bce9de1837c486f834cf930df711e77.jpg~tplv-a9rns2rl98-24:720:720.png?rcl=20251109155302F2ADCB35F5DE31772A7B&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1763279583&x-signature=MZLV3kJHqGa1WCApwDqd2wUElgQ%3D" 
+                 alt="新人照片" 
+                 class="w-full h-full object-cover">
+          </div>
+          <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+            <h3 class="text-2xl md:text-3xl font-display text-primary mb-6">感谢您的到来</h3>
+            <p class="mb-6">爱情是一段美好的旅程，而婚礼是这段旅程中最璀璨的一站。</p>
+            <p class="mb-6">感谢您在百忙之中前来见证我们的幸福时刻，您的到来让这个日子更加特别。</p>
+            <p class="font-medium text-primary">—— 冯朝军 & 吴思婷</p>
+            <p class="mt-2 text-accent">2025.11.15</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white py-10">
+    <div class="container mx-auto px-4 text-center">
+      <h3 class="text-xl font-display mb-4">冯朝军 & 吴思婷 婚礼</h3>
+      <p class="mb-2">2025年11月15日 广州北纬23°8森林营地</p>
+      <p class="text-sm text-white/70 mt-6">期待与您共同见证美好时刻</p>
+    </div>
+  </footer>
+
+  <script>
+    // 移动端菜单切换
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('py-2', 'shadow');
+        navbar.classList.remove('py-3');
+      } else {
+        navbar.classList.add('py-3');
+        navbar.classList.remove('py-2', 'shadow');
+      }
+    });
+    
+    // 初始化地图
+    document.addEventListener('DOMContentLoaded', function() {
+      // 广州北纬23°8森林营地的大致坐标（经纬度）
+      const campLatLng = [23.551, 113.668];
+      
+      const map = L.map('map').setView(campLatLng, 15);
+      
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+      L.marker(campLatLng).addTo(map)
+        .bindPopup('<b>广州北纬23°8森林营地</b><br>从化区城郊街道西和村草塘101号')
+        .openPopup();
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // 关闭移动端菜单（如果打开）
+        document.getElementById('mobile-menu').classList.add('hidden');
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // 添加元素进入视口时的动画
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('section > div > div').forEach(el => {
+      el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
